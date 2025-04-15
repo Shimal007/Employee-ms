@@ -1,18 +1,6 @@
-import { deleteEmployee } from '../services/api';
+import { Link } from 'react-router-dom';
 
-export default function EmployeeTable({ employees, onEdit, onDelete, showAlert }) {
-  const handleDelete = async (id) => {
-    if (window.confirm('Are you sure you want to delete this employee?')) {
-      try {
-        await deleteEmployee(id);
-        onDelete();
-        showAlert('Employee deleted!', 'success');
-      } catch (error) {
-        showAlert('Failed to delete employee', 'error');
-      }
-    }
-  };
-
+export default function EmployeeTable({ employees, onEdit, onDelete }) {
   return (
     <div className="card">
       <div className="card-header">
@@ -33,36 +21,44 @@ export default function EmployeeTable({ employees, onEdit, onDelete, showAlert }
               </tr>
             </thead>
             <tbody>
-              {employees.map((emp, i) => (
-                <tr key={emp._id}>
-                  <td>{i + 1}</td>
+              {employees.map((employee, index) => (
+                <tr key={employee._id}>
+                  <td>{index + 1}</td>
                   <td>
                     <div className="employee-info">
-                      <img 
-                        src={`https://randomuser.me/api/portraits/${emp.gender === 'female' ? 'women' : 'men'}/${i + 1}.jpg`}
-                        className="avatar" 
-                        alt="Employee" 
+                      <img
+                        src={`https://randomuser.me/api/portraits/${
+                          employee.gender === 'female' ? 'women' : 'men'
+                        }/${index + 1}.jpg`}
+                        className="employee-avatar"
+                        alt={employee.name}
                       />
-                      <div className="employee-details">
-                        <div className="employee-name">{emp.name}</div>
-                        <div className="employee-email">{emp.email}</div>
+                      <div>
+                        <div className="employee-name">{employee.name}</div>
+                        <div className="employee-email">{employee.email}</div>
                       </div>
                     </div>
                   </td>
-                  <td>{emp.position}</td>
-                  <td>{emp.department || '-'}</td>
+                  <td>{employee.position}</td>
+                  <td>{employee.department || '-'}</td>
                   <td>
-                    <span className={`status ${emp.onLeave ? 'status-on-leave' : 'status-active'}`}>
-                      {emp.onLeave ? 'On Leave' : 'Active'}
+                    <span className={`status ${employee.onLeave ? 'status-on-leave' : 'status-active'}`}>
+                      {employee.onLeave ? 'On Leave' : 'Active'}
                     </span>
                   </td>
-                  <td>{new Date(emp.joinDate).toLocaleDateString()}</td>
+                  <td>{new Date(employee.joinDate).toLocaleDateString()}</td>
                   <td>
-                    <button className="action-btn edit" onClick={() => onEdit(emp)}>
-                      <i className="fas fa-edit"></i>
+                    <button 
+                      className="btn btn-sm btn-primary"
+                      onClick={() => onEdit(employee)}
+                    >
+                      <i className="fas fa-edit"></i> Edit
                     </button>
-                    <button className="action-btn delete" onClick={() => handleDelete(emp._id)}>
-                      <i className="fas fa-trash"></i>
+                    <button
+                      className="btn btn-sm btn-danger"
+                      onClick={() => onDelete(employee._id)}
+                    >
+                      <i className="fas fa-trash"></i> Delete
                     </button>
                   </td>
                 </tr>

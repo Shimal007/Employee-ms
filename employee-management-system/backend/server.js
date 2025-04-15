@@ -20,11 +20,35 @@ const employeeSchema = new mongoose.Schema({
   department: String,
   joinDate: { type: Date, default: Date.now },
   onLeave: { type: Boolean, default: false },
-  gender: { type: String, enum: ['male', 'female'], default: 'male' }
+  gender: { type: String, enum: ['male', 'female'], default: 'male' },
+  // Add to your employeeSchema
+  salary: {
+    base: { type: Number, default: 0 },
+    bonus: { type: Number, default: 0 },
+    deductions: { type: Number, default: 0 },
+    paymentFrequency: { 
+      type: String, 
+      enum: ['monthly', 'bi-weekly', 'weekly'],
+      default: 'monthly'
+    },
+    bankAccount: {
+      accountNumber: String,
+      bankName: String,
+      ifscCode: String
+    }
+  }
 });
 
 const Employee = mongoose.model('Employee', employeeSchema);
-
+app.get('/employees/:id', async (req, res) => {
+  try {
+    const employee = await Employee.findById(req.params.id);
+    if (!employee) return res.status(404).json({ error: 'Employee not found' });
+    res.json(employee);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch employee' });
+  }
+});
 // Routes
 app.get('/employees', async (req, res) => {
   try {

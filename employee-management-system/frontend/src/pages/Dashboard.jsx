@@ -41,37 +41,50 @@ export default function Dashboard() {
     setTimeout(() => setAlert(null), 3000);
   };
 
-  return (
-    <div className="app-container">
-      <Sidebar />
-      <div className="main-content">
-        <Topbar onSearch={(e) => setSearchTerm(e.target.value)} />
-        <div className="content-area">
-          <div className="page-header">
-            <div className="page-title">
-              <h1>Employee Management</h1>
-              <p>Manage all employees in one place</p>
-            </div>
-            <button className="btn btn-primary" onClick={() => {
-              setCurrentEmployee(null);
-              setIsModalOpen(true);
-            }}>
-              <i className="fas fa-plus"></i> Add Employee
-            </button>
-          </div>
+  const openAddModal = () => {
+    setCurrentEmployee(null);
+    setIsModalOpen(true);
+  };
 
-          <StatsCards employees={employees} />
-          <EmployeeTable 
-            employees={filteredEmployees}
-            onEdit={(emp) => {
-              setCurrentEmployee(emp);
-              setIsModalOpen(true);
-            }}
-            onDelete={loadEmployees}
-            showAlert={showAlert}
-          />
+  const openEditModal = (employee) => {
+    setCurrentEmployee(employee);
+    setIsModalOpen(true);
+  };
+
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  return (
+    <div className="content-area">
+      <div className="page-header">
+        <div className="page-title">
+          <h1>Employee Management</h1>
+          <p>Manage all your employees in one place</p>
         </div>
+        <button className="btn btn-primary" onClick={openAddModal}>
+          <i className="fas fa-plus"></i> Add Employee
+        </button>
       </div>
+
+      <StatsCards employees={employees} />
+      
+      <div className="search-bar">
+        <i className="fas fa-search"></i>
+        <input 
+          type="text" 
+          placeholder="Search employees..." 
+          value={searchTerm}
+          onChange={handleSearch}
+        />
+      </div>
+
+      <EmployeeTable 
+        employees={filteredEmployees}
+        onEdit={openEditModal}
+        onDelete={loadEmployees}
+        showAlert={showAlert}
+      />
 
       {isModalOpen && (
         <EmployeeModal

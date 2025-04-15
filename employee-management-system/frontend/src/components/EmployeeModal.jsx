@@ -111,6 +111,9 @@ export default function EmployeeModal({ employee, onClose, onSave, showAlert }) 
               </select>
             </div>
             <div className="form-group">
+</div>
+
+            <div className="form-group">
               <label>Join Date</label>
               <input
                 type="date"
