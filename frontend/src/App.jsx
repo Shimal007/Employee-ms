@@ -34,7 +34,7 @@ function App() {
           <Route path="/" element={
             <PrivateRoute>
               <div className="app-container">
-                <Sidebar />
+                <Sidebar setIsLoggedIn={setIsLoggedIn} />
                 <div className="main-content">
                   <Topbar onSearch={handleSearch} searchTerm={searchTerm} />
                   <Navigate to="/dashboard" />
@@ -46,7 +46,7 @@ function App() {
           <Route path="/dashboard" element={
             <PrivateRoute>
               <div className="app-container">
-                <Sidebar />
+                <Sidebar setIsLoggedIn={setIsLoggedIn} />
                 <div className="main-content">
                   <Topbar onSearch={handleSearch} searchTerm={searchTerm} />
                   <Dashboard onSearch={handleSearch} />
@@ -58,7 +58,7 @@ function App() {
           <Route path="/employees" element={
             <PrivateRoute>
               <div className="app-container">
-                <Sidebar />
+                <Sidebar setIsLoggedIn={setIsLoggedIn} />
                 <div className="main-content">
                   <Topbar onSearch={handleSearch} searchTerm={searchTerm} />
                   <Employees />
@@ -70,7 +70,7 @@ function App() {
           <Route path="/employees/:id" element={
             <PrivateRoute>
               <div className="app-container">
-                <Sidebar />
+                <Sidebar setIsLoggedIn={setIsLoggedIn} />
                 <div className="main-content">
                   <Topbar onSearch={handleSearch} searchTerm={searchTerm} />
                   <EmployeeDetail />
@@ -82,7 +82,7 @@ function App() {
           <Route path="/payroll" element={
             <PrivateRoute>
               <div className="app-container">
-                <Sidebar />
+                <Sidebar setIsLoggedIn={setIsLoggedIn} />
                 <div className="main-content">
                   <Topbar onSearch={handleSearch} searchTerm={searchTerm} />
                   <Payroll />
