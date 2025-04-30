@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../services/api';
-
+import './Login.css';
 export default function Login() {
   const [formData, setFormData] = useState({
     email: '',
@@ -35,7 +35,7 @@ export default function Login() {
   };
 
   return (
-    <div className="login-container">
+    <div className="login-container" >
       <div className="login-form-wrapper">
         <div className="login-header">
           <h2>Employee Management System</h2>
@@ -81,10 +81,6 @@ export default function Login() {
             {isLoading ? 'Logging in...' : 'Log In'}
           </button>
         </form>
-
-        <div className="login-footer">
-          <p>Default Admin: admin@example.com / admin123</p>
-        </div>
       </div>
     </div>
   );
